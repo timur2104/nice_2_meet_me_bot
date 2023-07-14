@@ -1,7 +1,7 @@
 # nice_2_meet_me_bot
 Test task for kids ai.
 
-Project developed in Python with using Aiogram.
+Project developed in Python with usage of Aiogram.
 
 Script running this bot contains API keys, that's why it wasn't loaded in privat repo.
 
