@@ -49,7 +49,12 @@ async def handle_nextstep(message: types.Message):
     """
     Handler for command that will notify candidate about his next step
     """
+
+    await bot.delete_message(message_id=message.message_id,
+                             chat_id=message.from_user.id)
+
     await AllStates.wait_message.set()
+
     await bot.send_message(text='Отправь сообщение и кандидат в наставники его обязательно получит',
                            chat_id=message.from_user.id,
                            parse_mode='HTML',
@@ -60,8 +65,6 @@ async def send_nextstep(message: types.Message):
     """
     Handler copying message sent to bot to direct it to developer
     """
-    await bot.delete_message(message_id=message.message_id,
-                             chat_id=message.from_user.id)
 
     try:
         await bot.copy_message(chat_id=MY_TG_ID,
@@ -144,11 +147,16 @@ async def send_voice_story(message: types.Message):
     Handler sending the story requested by user in format of voice message
     """
     if message.text == 'Мой рассказ о GPT🧠':
-        pass
+        voice_file = open('data/GPT.m4a', 'rb')
     elif message.text == 'Я объясняю разницу между SQL и NoSQL📚':
-        pass
+        voice_file = open('data/SQL.m4a', 'rb')
     else:
-        pass
+        voice_file = open('data/Lovestory.m4a', 'rb')
+
+    await bot.send_voice(chat_id=message.from_user.id,
+                         voice=voice_file)
+
+    voice_file.close()
 
 
 async def voice_handler(message: types.Message, state: FSMContext):
